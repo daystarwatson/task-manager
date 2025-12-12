@@ -1,5 +1,5 @@
-def greet(name):
-    print(f"welcome! good day, dear {name}")
+def greet_user():
+    print("welcome! good day, dear passenger.")
 
 
 def pick_ups():
@@ -8,7 +8,8 @@ def pick_ups():
     pick_ups = input("please, enter a pick up location: ").lower()
     if pick_ups not in nigeria_pick_ups:
         print("sorry, we dont operate outside nigria. try again")
-        exit()
+        pick_ups = input("please, enter a pick up location: ").lower()
+
     return pick_ups
 
 
@@ -18,7 +19,7 @@ def nigeria_drop_offs():
     drop_off = input("please, enter your drop off location: ")
     if drop_off not in nigeria_drop_offs:
         print("sorry, drop off location is outside of nigeria. try again")
-        exit()
+        drop_off = input("please, enter your drop off location: ")
     return drop_off
 
 
@@ -30,11 +31,14 @@ def start_ride():
 
     elif start_ride == "no":
         print("ride has not started, waiting for you to start the ride")
+        start_ride = input(
+            "should we start the ride? (yes/no/hold on): ").lower()
 
     else:
         start_ride == "hold on"
         print("okay, say go when you want me to go")
-        exit()
+        start_ride = input(
+            "should we start the ride? (go): ").lower()
     return start_ride
 
 
@@ -43,9 +47,11 @@ def payments(ride_price):
     amount = int(input("enter the amount for the payment of the ride: $"))
     if amount < ride_price:
         print("amount is insufficient. please enter the right amount")
-        exit()
+        amount = int(input("enter the amount for the payment of the ride: $"))
+
     elif amount == ride_price:
         print("payment successful. exact amount thank you")
+
     else:
         amount > ride_price
         change = amount - ride_price
@@ -66,20 +72,19 @@ def ask_for_tips():
         print("have a lovely day")
 
 
-def main_program(): s
+def main_program():
 
+    greet_user()
 
-(greet("daystar watson"))
+    pick_ups()
 
-pick_ups()
+    nigeria_drop_offs()
 
-nigeria_drop_offs()
+    start_ride()
 
-start_ride()
+    payments(5000)
 
-payments(5000)
-
-ask_for_tips()
+    ask_for_tips()
 
 
 main_program()
