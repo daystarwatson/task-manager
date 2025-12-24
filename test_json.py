@@ -1,4 +1,5 @@
-import json
+import json as jsonlib
+import os
 
 FILE_NAME = "tasks.json"
 
@@ -28,6 +29,7 @@ def add_task(tasks):
         "complete": False
     }
     tasks.append(new_task)
+    print(f"task added: {title}")
 
 
 def update_task(tasks):
@@ -44,12 +46,17 @@ def delete_task(tasks):
 
 def save_task(tasks):
     with open("tasks.json", "w") as file:
-        json.dump(tasks, file, ident=2)
+        jsonlib.dump(tasks, file)
 
 
-def load_task(tasks):
-    with open(FILE_NAME, "r") as file:
-        json.load(file)
+def load_tasks():
+    if os.path.exists(FILE_NAME):
+        with open("tasks.json", "r") as file:
+            try:
+                return jsonlib.load(file)
+            except jsonlib.JSONDecodeError:
+                return []
+    return []
 
 
 def main():
@@ -65,20 +72,22 @@ def main():
 
         elif choice == "2":
             add_task(tasks)
-            save_tasks(tasks)
+            save_task(tasks)
 
         elif choice == "3":
             update_task(tasks)
-            save_tasks(tasks)
+            save_task(tasks)
 
         elif choice == "4":
             delete_task(tasks)
-            save_tasks(tasks)
+            save_task(tasks)
 
         elif choice == "5":
-            save_tasks(tasks)
+            save_task(tasks)
             print("good bye")
             break
         else:
             print("invalid choice")
-            print("hello world")
+
+
+main()
